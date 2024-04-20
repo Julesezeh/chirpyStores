@@ -1,0 +1,50 @@
+<tr id="product-info-{{order_item.pk}}">
+    <td class="product-col">
+        <div class="product">
+            <figure class="product-media">
+                <a href="#">
+                    <img src=" {{ order_item.product.image.url }}" alt="Product image">
+                </a>
+            </figure>
+
+            <h3 class="product-title">
+                <a href="{% url 'MAIN:product' pk=order_item.product.pk %}">{{order_item.product.name}}</a>
+            </h3><!-- End .product-title -->
+        </div><!-- End .product -->
+    </td>
+    <td class="price-col" style="color:black"><span style="text-decoration: line-through; color: black; padding-right: 2px; font-size: 0.8em;">N</span><span id="productPrice">{{order_item.product.price|intcomma }}</span></td>
+    <td class="quantity-col">
+        <div class="cart-product-quantity"                                                     
+>
+            <input type="number" class="form-control" value="{{order_item.quantity}}"
+                    hx-post = "/update/{{order_item.pk}}"
+                    hx-target = "#product-info-{{order_item.pk}}"
+                    hx-trigger = "change"
+                    hx-delay= "2s"
+                    hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'
+                    hx-vals =  'js:{ quantity: getQuantity({{order_item.pk}})}'   
+                    onclick="calculateNewTotal()"  
+                    id="quantity-{{order_item.pk}}" min="1" max="10" step="1" data-decimals="0" required>
+        </div><!-- End .cart-product-quantity -->
+    </td>
+    <td class="total-col" style="color:black; font-size:1.3em; font-weight:600;"><span style="text-decoration: line-through; color: black; padding-right: 2px; font-size: 0.8em;">N</span>{{order_item.line_total|intcomma}}</td>
+    <td 
+        hx-delete="{% url 'remove_from_cart' pk=order_item.id %}"
+        hx-confirm="Are you sure you want to remove this product from your cart ?"
+        hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'
+        hx-target=".cart"
+
+
+        class="remove-col"
+    >
+        <button 
+            class="btn-remove"
+            {% comment %} hx-get="{% url 'remove_from_cart' pk=order_item.pk %}"
+            hx-confirm="Are you sure you want to remove this product from your cart ?" 
+            hx-target=".cart-items" 
+            hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'                                             {% endcomment %}
+        >
+            <i class="icon-close" style="cursor: pointer; color:pink;"></i>
+        </button>
+    </td>
+</tr>

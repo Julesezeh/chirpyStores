@@ -1,0 +1,3 @@
+/ProjectVenv
+.env
+db.sqlite3

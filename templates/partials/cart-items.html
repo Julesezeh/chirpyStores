@@ -1,0 +1,218 @@
+{% load humanize %} 
+{% load static %}
+
+<div class="page-content page-content-cart">
+    <div class="cart">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    {% if order_items %}
+                    <table class="table table-cart table-mobile">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="cart_items">
+                            
+                            {% for order_item in order_items %}
+                            <tr id="product-info-{{order_item.pk}}">
+                                <td class="product-col">
+                                    <div class="product">
+                                        <figure class="product-media">
+                                            <a href="#">
+                                                <img src=" {{ order_item.product.image.url }}" alt="Product image">
+                                            </a>
+                                        </figure>
+
+                                        <h3 class="product-title">
+                                            <a href="{% url 'MAIN:product' pk=order_item.product.pk %}">{{order_item.product.name}}</a>
+                                        </h3><!-- End .product-title -->
+                                    </div><!-- End .product -->
+                                </td>
+                                <td class="price-col" style="color:black"><span style="text-decoration: line-through; color: black; padding-right: 2px; font-size: 0.8em;">N</span><span id="productPrice">{{order_item.product.price|intcomma }}</span></td>
+                                <td class="quantity-col">
+                                    <div class="cart-product-quantity"                                                     
+>
+                                        <input type="number" class="form-control" value="{{order_item.quantity}}"
+                                                hx-post = "/update/{{order_item.pk}}"
+                                                hx-target = ".cart"
+                                                hx-trigger = "change"
+                                                hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'
+                                                hx-vals =  'js:{ quantity: getQuantity({{order_item.pk}})}'   
+                                                onclick="calculateNewTotal()"  
+                                                id="quantity-{{order_item.pk}}" min="1" max="10" step="1" data-decimals="0" required>
+                                    </div><!-- End .cart-product-quantity -->
+                                </td>
+                                <td class="total-col" style="color:black; font-size:1.3em; font-weight:600;"><span style="text-decoration: line-through; color: black; padding-right: 2px; font-size: 0.8em;">N</span>{{order_item.line_total|intcomma}}</td>
+                                <td 
+                                    hx-delete="{% url 'remove_from_cart' pk=order_item.id %}"
+                                    hx-confirm="Are you sure you want to remove this product from your cart ?"
+                                    hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'
+                                    hx-target=".cart"
+
+
+                                    class="remove-col"
+                                >
+                                    <button 
+                                        class="btn-remove"
+                                        {% comment %} hx-get="{% url 'remove_from_cart' pk=order_item.pk %}"
+                                        hx-confirm="Are you sure you want to remove this product from your cart ?" 
+                                        hx-target=".cart-items" 
+                                        hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'                                             {% endcomment %}
+                                    >
+                                        <i class="icon-close" style="cursor: pointer; color:pink;"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                                    <script>
+                                        function getQuantity(pk){
+                                            console.log("pk",pk)
+                                            return document.getElementById(`quantity-${pk}`).value
+                                        }
+                                        function calculateNewTotal(){
+                                            console.log("I was clicked!")
+                                        }
+                                    </script>
+                                    
+                            {% endfor %}
+                            {% comment %} <tr>
+                                <td class="product-col">
+                                    <div class="product">
+                                        <figure class="product-media">
+                                            <a href="#">
+                                                <img src=" {% static 'assets/images/products/table/product-1.jpg' %}" alt="Product image">
+                                            </a>
+                                        </figure>
+
+                                        <h3 class="product-title">
+                                            <a href="#">Beige knitted elastic runner shoes</a>
+                                        </h3><!-- End .product-title -->
+                                    </div><!-- End .product -->
+                                </td>
+                                <td class="price-col" style="color:lightgreen">$84.00</td>
+                                <td class="quantity-col">
+                                    <div class="cart-product-quantity">
+                                        <input type="number" class="form-control" value="{{product.product.quantity}}" min="1" max="10" step="1" data-decimals="0" required>
+                                    </div><!-- End .cart-product-quantity -->
+                                </td>
+                                <td class="total-col" style="color:lightgreen">$84.00</td>
+                                <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td class="product-col">
+                                    <div class="product">
+                                        <figure class="product-media">
+                                            <a href="#">
+                                                <img src=" {% static 'assets/images/products/table/product-2.jpg' %}" alt="Product image">
+                                            </a>
+                                        </figure>
+
+                                        <h3 class="product-title">
+                                            <a href="#">Blue utility pinafore denim dress</a>
+                                        </h3><!-- End .product-title -->
+                                    </div><!-- End .product -->
+                                </td>
+                                <td class="price-col" style="color:lightgreen">$76.00</td>
+                                <td class="quantity-col">
+                                    <div class="cart-product-quantity">
+                                        <input type="number" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
+                                    </div><!-- End .cart-product-quantity -->                                 
+                                </td>
+                                <td class="total-col" style="color:lightgreen">$76.00</td>
+                                <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
+                            </tr> {% endcomment %}
+                        </tbody>
+                    </table><!-- End .table table-wishlist -->
+                    
+                    <div class="cart-bottom">
+                        <div class="cart-discount">
+                            <form action="#">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" required placeholder="coupon code">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-primary-2" type="submit"><i class="icon-long-arrow-right"></i></button>
+                                    </div><!-- .End .input-group-append -->
+                                </div><!-- End .input-group -->
+                            </form>
+                        </div><!-- End .cart-discount -->
+
+                        <a href="#" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i class="icon-refresh"></i></a>
+                    </div><!-- End .cart-bottom -->
+                    {% else %} <h1 style="color: rgba(211,211,211,0.7); text-align: center;">
+                        YOUR CART IS EMPTY</h1> 
+                    {% endif %}
+
+                </div><!-- End .col-lg-9 -->
+                <aside class="col-lg-3">
+                    <div class="summary summary-cart">
+                        <h3 class="summary-title">Cart Total</h3><!-- End .summary-title -->
+
+                        <table class="table table-summary">
+                            <tbody>
+                                {% comment %} <tr class="summary-subtotal">
+                                    <td>Subtotal:</td>
+                                    <td>{{curent_order.total_amount}}</td>
+                                </tr><!-- End .summary-subtotal --> {% endcomment %}
+                                <tr class="summary-shipping">
+                                    <td>Shipping:</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+
+                                <tr class="summary-shipping-row">
+                                    <td>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="free-shipping" name="shipping" class="custom-control-input">
+                                            <label class="custom-control-label" for="free-shipping">Free Shipping</label>
+                                        </div><!-- End .custom-control -->
+                                    </td>
+                                    <td>$0.00</td>
+                                </tr><!-- End .summary-shipping-row -->
+
+                                <tr class="summary-shipping-row">
+                                    <td>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="standart-shipping" name="shipping" class="custom-control-input">
+                                            <label class="custom-control-label" for="standart-shipping">Standart:</label>
+                                        </div><!-- End .custom-control -->
+                                    </td>
+                                    <td>$10.00</td>
+                                </tr><!-- End .summary-shipping-row -->
+
+                                <tr class="summary-shipping-row">
+                                    <td>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="express-shipping" name="shipping" class="custom-control-input">
+                                            <label class="custom-control-label" for="express-shipping">Express:</label>
+                                        </div><!-- End .custom-control -->
+                                    </td>
+                                    <td>$20.00</td>
+                                </tr><!-- End .summary-shipping-row -->
+
+                                <tr class="summary-shipping-estimate">
+                                    <td>Estimate for Your Country<br> <a href="dashboard.html">Change address</a></td>
+                                    <td>&nbsp;</td>
+                                </tr><!-- End .summary-shipping-estimate -->
+
+                                <tr class="summary-total">
+                                    <td>Total:</td>
+                                    <td  style="font-weight: bold; color: black; font-size: 1.5em;">
+
+                                        <span style="text-decoration: line-through; color: black; padding-right: 5px;font-size: 0.8em;">N</span><span id="totalCost">{{current_order.total_amount|intcomma }}</span></td>
+                                </tr><!-- End .summary-total -->
+                            </tbody>
+                        </table><!-- End .table table-summary -->
+
+                        <a href="checkout.html" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
+                    </div><!-- End .summary -->
+
+                    <a href="category.html" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
+                </aside><!-- End .col-lg-3 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .cart -->

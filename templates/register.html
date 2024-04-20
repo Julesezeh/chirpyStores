@@ -1,0 +1,106 @@
+{% extends 'base_layout.html' %}
+
+
+{% block icons %}
+<div class="header-search" style="margin-left: 180px;">
+    <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
+    <form action="#" method="get">
+        <div class="header-search-wrapper">
+            <label for="q" class="sr-only">Search</label>
+            <input type="search" class="form-control" name="q" id="q" placeholder="Search in..." required>
+        </div><!-- End .header-search-wrapper -->
+    </form>
+</div><!-- End .header-search -->
+
+<a href="wishlist.html" class="wishlist-link">
+    <i class="icon-heart-o"></i>
+        <span class="wishlist-count">3</span>
+</a>
+
+<div class="dropdown cart-dropdown">
+    <a href="{% url 'MAIN:cart' %}" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+        <i class="icon-shopping-cart"></i>
+        <span class="cart-count" id="cart-count">10</span>
+
+    </a>
+
+
+</div><!-- End .cart-dropdown -->
+{% endblock icons %}
+
+{% block auth %}
+    <div ></div>
+{% endblock auth %}
+
+
+{% block content %}
+<main class="main">
+
+    <div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17" style="background-image: url('assets/images/backgrounds/login-bg.jpg')">
+        <div class="container">
+            <div class="form-box">
+                <div class="form-tab">
+                    <ul class="nav nav-pills nav-fill" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active " id="register-tab-2" data-toggle="tab" href="#register-2" role="tab" aria-controls="register-2" aria-selected="true">Register</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        {% for message in messages %}
+                            {% if message.tags == 'error' %}
+                                <p style="color: red; margin-top: 12px;">{{ message }}</p>
+                            {% endif %}
+                        {% endfor %}
+
+                        
+                        <div class="tab-pane fade show active" id="register-2" role="tabpanel" aria-labelledby="register-tab-2">
+                            <form action="{% url 'auth:register'%}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="register-email" style="font-weight: bold;">Your email address *</label>
+                                    <input type="email" class="form-control" id="register-email" name="register-email" required>
+                                </div><!-- End .form-group -->
+                        
+                                <div class="form-group">
+                                    <label for="register-email" style="font-weight: bold;">Phone Number  (optional)* </label>
+                                    <input type="phone2numeric" class="form-control" id="register-mobile-number" name="phone-number" >
+                                </div><!-- End .form-group -->
+                        
+                        
+                                <div class="form-group">
+                                    <label for="register-password" style="font-weight: bold;">Password *</label>
+                                    <input type="password" class="form-control" id="register-password" name="register-password" required>
+                                </div><!-- End .form-group -->
+                        
+                                <div class="form-footer">
+                                    <button type="submit" class="btn btn-outline-primary-2">
+                                        <span>SIGN UP</span>
+                                        <i class="icon-long-arrow-right"></i>
+                                    </button>
+                        
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="register-policy" required>
+                                        <label class="custom-control-label" for="register-policy">I agree to the <a href="#">privacy policy</a> *</label>
+                                    </div><!-- End .custom-checkbox -->
+                                </div><!-- End .form-footer -->
+                            </form>
+                                 {% comment %} O-AUTH {% endcomment %}
+                            <div class="form-choice">
+                                <p class="text-center">or sign in with</p>
+                                <div class="col">
+                                    <div>
+                                        <a href="{% url 'auth:google_login' %}" class="btn btn-login btn-g">
+                                            <i class="icon-google"></i>
+                                            Login With Google
+                                        </a>
+                                    </div><!-- End .col-6 -->
+                                </div><!-- End .row -->
+                            </div><!-- End .form-choice -->
+                        </div><!-- .End .tab-pane -->
+                    </div><!-- End .tab-content -->
+                </div><!-- End .form-tab -->
+            </div><!-- End .form-box -->
+        </div><!-- End .container -->
+    </div><!-- End .login-page section-bg -->
+</main><!-- End .main -->
+{% endblock content %}
