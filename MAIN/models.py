@@ -14,14 +14,14 @@ class ProductCategory(models.Model):
 class ShoeBrand (models.Model):
     name = models.CharField(max_length=200,default=None,blank=True)
 
-class Size(models.Model):
-    size_value = models.IntegerField(unique=True,default=None)
-
+    def __str__(self):
+        return self.name
+    
 class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     brand = models.ForeignKey(ShoeBrand, on_delete=models.CASCADE, default=None, null=True,blank=True)
-    sizes = models.ManyToManyField(Size,default=None)
+    sizes = models.IntegerField()
     price = models.FloatField()
     old_price = models.FloatField(blank=True,default=0.0)
 
