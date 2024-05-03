@@ -32,6 +32,9 @@ class Product(models.Model):
     old_price = models.FloatField(blank=True,default=0.0)
 
     image = models.ImageField(upload_to='product_images/')
+    image_2 = models.ImageField(upload_to='product_images/')
+    image_3 = models.ImageField(upload_to='product_images/')
+
     out_of_stock = models.BooleanField(default=False)
     
     # GET CATEGORIES LATER
