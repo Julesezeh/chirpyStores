@@ -42,4 +42,11 @@ class Migration(migrations.Migration):
                 ('category', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='MAIN.productcategory')),
             ],
         ),
+        migrations.CreateModel(
+            name='ShoeBrand',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('name', models.CharField(blank=True, default=None, max_length=200)),
+            ],
+        ),
     ]
