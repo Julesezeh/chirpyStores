@@ -35,7 +35,7 @@
                         <div class="product-gallery product-gallery-vertical">
                             <div class="row">
                                 <figure class="product-main-image">
-                                    <img id="product-zoom" src="{{ product.image.url }}" data-zoom-image="{% static 'assets/images/products/single/1-big.jpg' %}" alt="product image">
+                                    <img id="product-zoom" src="{{ product.image.url }}" data-zoom-image="{{ product.image.url }}" alt="product image">
 
                                     <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                         <i class="icon-arrows"></i>
@@ -84,15 +84,29 @@
                             </div><!-- End .product-content --> {% endcomment %}
 
                             <div class="details-filter-row details-row-size">
-                                <label>Color:</label>
+                                {% comment %} <label>Color:</label> {% endcomment %}
 
                                 <div class="product-nav product-nav-thumbs">
-                                    <a href="#" class="active">
+                                    {% if product.image_2 %}
+                                        <a href="#" class="active">
+                                            <img src="{{ product.image_2.url }}" alt="product desc">
+                                        </a>
+                                    {% endif %}
+                                    {% if product.image_3 %}
+                                        <a href="#" class="active">
+                                            <img src="{{ product.image_3.url }}" alt="product desc">
+                                        </a>
+                                    {% endif %}
+
+
+
+
+                                    {% comment %} <a href="#" class="active">
                                         <img src="{{ product.image.url }}" alt="product desc">
                                     </a>
                                     <a href="#">
                                         <img src="{{ product.image.url }}" alt="product desc">
-                                    </a>
+                                    </a> {% endcomment %}
                                 </div><!-- End .product-nav -->
                             </div><!-- End .details-filter-row -->
 
@@ -101,10 +115,14 @@
                                 <div class="select-custom">
                                     <select name="size" id="size" class="form-control">
                                         <option value="#" selected="selected">Select a size</option>
-                                        <option value="s">Small</option>
+                                        {% for size in product.size_available.all  %}
+                                            <option value="{{size}}">{{size}}</option>
+                                        
+                                        {% endfor %}
+                                        {% comment %} <option value="s">Small</option>
                                         <option value="m">Medium</option>
                                         <option value="l">Large</option>
-                                        <option value="xl">Extra Large</option>
+                                        <option value="xl">Extra Large</option> {% endcomment %}
                                     </select>
                                 </div><!-- End .select-custom -->
 
