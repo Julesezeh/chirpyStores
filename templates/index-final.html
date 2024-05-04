@@ -94,9 +94,9 @@
             <div class="toolbox-right">
                 <ul class="nav-filter product-filter">
                     <li class="active"><a href="#" data-filter="*">All</a></li>
-                    <li><a href="#" data-filter=".furniture">Furniture</a></li>
-                    <li><a href="#" data-filter=".lighting">Lighting</a></li>
-                    <li><a href="#" data-filter=".accessories">Accessories</a></li>
+                    <li><a href="#" data-filter=".boots">Boots</a></li>
+                    <li><a href="#" data-filter=".sneaker">Sneakers</a></li>
+                    <li><a href="#" data-filter=".hightop">High-Tops</a></li>
                     <li><a href="#" data-filter=".sale">Sale</a></li>
                 </ul>
             </div><!-- End .toolbox-right -->
@@ -254,7 +254,7 @@
                         <span class="product-label">Sale</span>
                         {% endif %}
                         <a href="{% url 'MAIN:product' product.pk %}">
-                            <img src="{{product.image.url}}" alt="Product image" class="product-image">
+                            <img src="{{product.image.url}}" alt="Product image" class="product-image" style="height: 200px;">
                         </a>
 
                         <div class="product-action-vertical">
