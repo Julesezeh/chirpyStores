@@ -19,6 +19,8 @@ class ShoeBrand (models.Model):
     
 class SizeAvailable (models.Model):
     size = models.IntegerField()
+    class Meta:
+        ordering = ['size']
 
     def __str__(self):
         return str(self.size)
@@ -32,8 +34,8 @@ class Product(models.Model):
     old_price = models.FloatField(blank=True,default=0.0)
 
     image = models.ImageField(upload_to='product_images/')
-    image_2 = models.ImageField(upload_to='product_images/')
-    image_3 = models.ImageField(upload_to='product_images/')
+    image_2 = models.ImageField(upload_to='product_images/', default=None,blank=True,null=True)
+    image_3 = models.ImageField(upload_to='product_images/', default=None,blank=True,null=True)
 
     out_of_stock = models.BooleanField(default=False)
     
