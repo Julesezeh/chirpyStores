@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from decimal import Decimal
 from django.contrib import messages
 from django.http import JsonResponse
+import time
 
 
 # Create your views here.
@@ -153,6 +154,8 @@ def update_order_item(request,pk):
     if request.method == "POST":
         order_item = OrderItem.objects.get(id=pk)
         quantity = int(request.POST.get("quantity"))
+        
+        time.sleep(2)
 
         if quantity < order_item.quantity:
             new_total = float(quantity) * order_item.product.price 
