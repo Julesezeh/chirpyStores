@@ -77,3 +77,22 @@ class Payment(models.Model):
     
 
 
+
+
+class BillingInformation(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100,blank=True,null=True)
+    street_address =  models.CharField(max_length=200)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    phone = models.CharField(max_length=14)
+    email = models.EmailField()
+    notes = models.TextField(blank=True,null=True)
+
+    def __str__(self):
+        return f"User {self.user}'s Billing info"
+    
+    def save_and_set_as_default(self):
+        pass
+    
