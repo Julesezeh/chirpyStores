@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import BasePopup, Product
-from Payment.models import Order, OrderItem
+from Payment.models import Order, OrderItem, BillingInformation
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from decimal import Decimal
@@ -186,6 +186,46 @@ def update_order_item(request,pk):
         return render(request,'partials/cart-items.html',{"order_items":current_order_items,"current_order":order_item_order})
 
 
+def save_billing_info(request):
+    if request.method == "POST":
+        pass
+        
+
 
 def checkout(request):
-    return render(request,'checkout.html')
+    if request.method == "POST":
+        existing_billing_info_pk = request.POST.get("delivery_info")
+        if existing_billing_info_pk:
+            selected_choice = BillingInformation.objects.get(pk=existing_billing_info_pk)
+            user_current_order = Order.objects.filter(user = request.user, is_active=True).last()
+            user_current_order.billing_info = selected_choice
+            user_current_order.save()
+
+        else:
+            delivery_email = request.POST.get("email")
+            delivery_first_name = request.POST.get("first_name")
+            delivery_last_name = request.POST.get("last_name")
+            delivery_street_address = request.POST.get("street_address")
+            delivery_city = request.POST.get("city")
+            delivery_state = request.POST.get("state")
+            delivery_notes = request.POST.get("notes",None)
+            new_billing_info = BillingInformation(user=request.user,
+                                                first_name=delivery_first_name,
+                                                last_name=delivery_last_name,
+                                                email=delivery_email,
+                                                street_address=delivery_street_address,
+                                                city=delivery_city,
+                                                state=delivery_state,
+                                                notes=delivery_notes)
+            new_billing_info.save()
+            user_current_order = Order.objects.filter(user = request.user, is_active=True).last()
+            user_current_order.billing_info = new_billing_info
+            user_current_order.save()
+
+    user_current_order = Order.objects.filter(user = request.user, is_active=True).last()
+    user_order_items = OrderItem.objects.filter(order=user_current_order)
+    delivery_details = BillingInformation.objects.filter(user=request.user)
+
+
+    print(user_order_items)
+    return render(request,'checkout.html',{"order_items":user_order_items, 'current_order':user_current_order,'delivery_details':delivery_details})
