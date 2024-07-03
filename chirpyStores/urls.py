@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from MAIN.views import add_to_cart, remove_from_cart, update_order_item
+from MAIN.views import add_to_cart, remove_from_cart, update_order_item, save_billing_info
 # from django.conf.urls import static
 
 urlpatterns = [
@@ -34,7 +34,8 @@ urlpatterns += static(settings.MEDIA_URL,
 htmx_patterns = [
     path("add_to_cart",add_to_cart,name="add_to_cart"),
     path("remove/<int:pk>/",remove_from_cart,name="remove_from_cart"),
-    path("update/<int:pk>",update_order_item,name="update_cart")
+    path("update/<int:pk>",update_order_item,name="update_cart"),
+    path("add_billing_info",save_billing_info,name="new_billing_info")
     ]
 
 urlpatterns += htmx_patterns
