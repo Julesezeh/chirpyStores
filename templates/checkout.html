@@ -27,7 +27,7 @@
                         <label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label>
                     </form>
                 </div><!-- End .checkout-discount -->
-                <form action="#">
+                <form >
                     <div class="row" >
                                 {% if delivery_details %}
                                         <!-- Card column -->
@@ -249,7 +249,7 @@
 
                                                 <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
                                                     <span class="btn-text">Place Order</span>
-                                                    <span class="btn-hover-text">Proceed to Checkout</span>
+                                                    <span class="btn-hover-text" onclick="payWithPaystack()">Proceed to Checkout</span>
                                                 </button>
                                             </div><!-- End .summary -->
                                         
@@ -260,4 +260,33 @@
         </div><!-- End .checkout -->
     </div><!-- End .page-content -->
 </main><!-- End .main -->
+
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script>
+    const paymentForm = document.getElementById('paymentForm');
+paymentForm.addEventListener("submit", payWithPaystack, false);
+
+function payWithPaystack(e) {
+  e.preventDefault();
+
+  let handler = PaystackPop.setup({
+    key: '{{public_key}}", // Replace with your public key
+    email: {{user.email}},
+    amount: {{current_order.total_amount}} * 100,
+    currency:"NGN",
+    ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+    // label: "Optional string that replaces customer email"
+    onClose: function(){
+      alert('Window closed.');
+    },
+    callback: function(response){
+      let message = 'Payment complete! Reference: ' + response.reference;
+      alert(message);
+    }
+  });
+
+  handler.openIframe();
+}
+
+</script>
 {% endblock content %}

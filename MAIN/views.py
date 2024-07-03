@@ -7,6 +7,7 @@ from decimal import Decimal
 from django.contrib import messages
 from django.http import JsonResponse
 import time
+import chirpyStores.settings as settings
 
 
 # Create your views here.
@@ -221,11 +222,13 @@ def checkout(request):
             user_current_order = Order.objects.filter(user = request.user, is_active=True).last()
             user_current_order.billing_info = new_billing_info
             user_current_order.save()
-
-    user_current_order = Order.objects.filter(user = request.user, is_active=True).last()
+    user = request.user
+    print(user.email)
+    paystack_public_key = settings.PAYSTACK_PUBLIC_KEY
+    user_current_order = Order.objects.filter(user = user, is_active=True).last()
     user_order_items = OrderItem.objects.filter(order=user_current_order)
     delivery_details = BillingInformation.objects.filter(user=request.user)
 
 
     print(user_order_items)
-    return render(request,'checkout.html',{"order_items":user_order_items, 'current_order':user_current_order,'delivery_details':delivery_details})
+    return render(request,'checkout.html',{"order_items":user_order_items, 'current_order':user_current_order,'delivery_details':delivery_details, "public_key":paystack_public_key, "user":user})
