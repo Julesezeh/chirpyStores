@@ -47,6 +47,8 @@
                                                 hx-vals =  'js:{ quantity: getQuantity({{order_item.pk}})}'   
                                                 onclick="calculateNewTotal()"  
                                                 id="quantity-{{order_item.pk}}" min="1" max="10" step="1" data-decimals="0" required>
+
+
                                     </div><!-- End .cart-product-quantity -->
                                 </td>
                                 <td class="total-col" style="color:black; font-size:1.3em; font-weight:600;"><span style="text-decoration: line-through; color: black; padding-right: 2px; font-size: 0.8em;">N</span>{{order_item.line_total|intcomma}}</td>
