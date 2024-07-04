@@ -21,8 +21,8 @@
         <nav aria-label="breadcrumb" class="breadcrumb-nav">
             <div class="container">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{% url 'MAIN:home' %}">Home</a></li>
-                    <li class="breadcrumb-item"><a >Shop</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'MAIN:home' %}">Shop</a></li>
+                    {% comment %} <li class="breadcrumb-item"><a >Shop</a></li> {% endcomment %}
                     <li class="breadcrumb-item active" aria-current="page">{{product.name}}</li>
                 </ol>
             </div><!-- End .container -->
@@ -66,6 +66,12 @@
 
                     <div class="col-md-6">
                         <div class="product-details">
+                            <div class=" product-nav-dots">
+                                {% comment %} <a href="#" class="active" style="background: #333333;"><span class="sr-only">Color name</span></a>
+                                <a href="#" style="background: #a48264;"><span class="sr-only">Color name</span></a> {% endcomment %}
+                                <p style="font-weight: bold;">{{product.brand|capfirst}}</p>
+                            </div><!-- End .product-nav -->
+    
                             <h1 class="product-title">{{product.name}}</h1><!-- End .product-title -->
 
                             <div class="ratings-container">
@@ -75,7 +81,7 @@
                                 <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
                             </div><!-- End .rating-container -->
 
-                            <div class="product-price">
+                            <div style="font-weight: bold; font-size: 3em;" class="product-price">
                                 <div style="font-size: 0.5em; text-decoration: line-through;">N </div> {{product.price|intcomma}}
                             </div><!-- End .product-price -->
 
@@ -571,7 +577,7 @@
 
             <div class="col-6 justify-content-end">
                 <div class="product-price">
-                    <div style="font-size: 0.5em; text-decoration: line-through;">N </div> <span id="naira-price" data-price="{{product.price}}">{{product.price|intcomma}}</span>
+                    <div style="font-size: 0.5em; text-decoration: line-through; ">N </div> <span id="naira-price" data-price="{{product.price}}">{{product.price|intcomma}}</span>
                 </div><!-- End .product-price -->
                 <div class="product-details-quantity">
                     <input type="number" id="sticky-cart-qty" onclick=updateTotalCost() class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
