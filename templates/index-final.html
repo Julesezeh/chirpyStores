@@ -46,45 +46,7 @@
         </ul>
     </div>
     {% endif %} {% endcomment %}
-    <div class="intro-slider-container mb-4">
-        <div class="intro-slider owl-carousel owl-simple owl-nav-inside" data-toggle="owl" data-owl-options='{
-                "nav": false, 
-                "dots": true,
-                "responsive": {
-                    "992": {
-                        "nav": true,
-                        "dots": false
-                    }
-                }
-            }'>
-            <div class="intro-slide" style="background-image: url({% static '/assets/images/demos/demo-11/slider/slide-1.jpg'%});">
-                <div class="container intro-content">
-                    {% comment %} <h3 class="intro-subtitle " style="color:lightgreen; font-weight: bold; font-family:cursive; font-size: 1.2em; ">SEASONAL PICKS</h3><!-- End .h3 intro-subtitle --> {% endcomment %}
-                    <h1 class="intro-title" style="font-family:Ubuntu; font-weight: bold; color:darkgreen;margin-top: 0; font-size: 7em;">GET ALL <br>THE GOOD STUFF</h1><!-- End .intro-title -->
-
-                    <a href="category.html" class="btn btn-outline-primary-2 " style="background-color: #333333;">
-                        <span>Discover More</span>
-                        <i class="icon-long-arrow-right"></i>
-                    </a>
-                </div><!-- End .intro-content -->
-            </div><!-- End .intro-slide -->
-
-            <div class="intro-slide" style="background-image: url({% static '/assets/images/demos/demo-11/slider/slide-2.jpg'%});">
-                <div class="container intro-content">
-                    <h3 class="intro-subtitle text-primary">all at 50% off</h3><!-- End .h3 intro-subtitle -->
-                    <h1 class="intro-title text-white">The Most Beautiful <br>Novelties In Our Shop</h1><!-- End .intro-title -->
-
-                    <a href="category.html" class="btn btn-outline-primary-2 min-width-sm" style="background-color: #333333;">
-                        <span>SHOP NOW</span>
-                        <i class="icon-long-arrow-right"></i>
-                    </a>
-                </div><!-- End .intro-content -->
-            </div><!-- End .intro-slide -->
-        </div><!-- End .intro-slider owl-carousel owl-simple -->
-
-        <span class="slider-loader"></span><!-- End .slider-loader -->
-    </div><!-- End .intro-slider-container -->
-
+    
     <div class="container">
         <div class="toolbox toolbox-filter">
             <div class="toolbox-left">
@@ -248,13 +210,13 @@
         <div class="products-container" >
             {% for product in products %}
             <div class="product-item {% for category in product.category.all %}{{category|lower}}{% endfor %}  {% if product.old_price %}sale{% endif %} col-6 col-md-4 col-lg-3">
-                <div class="product product-4">
+                <div class="product product-10">
                     <figure class="product-media">
                         {% if product.old_price %}
                         <span class="product-label">Sale</span>
                         {% endif %}
                         <a href="{% url 'MAIN:product' product.pk %}">
-                            <img src="{{product.image.url}}" alt="Product image" class="product-image" style="height: 200px;">
+                            <img src="{{product.image.url}}" alt="Product image" class="product-image" style="height: 150px; width:600px;">
                         </a>
 
                         <div class="product-action-vertical">
@@ -267,12 +229,19 @@
                     </figure><!-- End .product-media -->
 
                     <div class="product-body">
+                        <div class="product-nav product-nav-dots">
+                            {% comment %} <a href="#" class="active" style="background: #333333;"><span class="sr-only">Color name</span></a>
+                            <a href="#" style="background: #a48264;"><span class="sr-only">Color name</span></a> {% endcomment %}
+                            <p style="font-weight: bold;">{{product.brand|capfirst}}</p>
+                        </div><!-- End .product-nav -->
+
                         <h3 class="product-title"><a href="product.html">{{product.name}}</a></h3><!-- End .product-title -->
-                        <div class="product-price">
+
+                        <div class="product-price" >
                             {% if product.quantity_available > 0 %} 
-                                <span class="new-price" style="display: flex; flex-direction: row;"> <div style="font-size: 0.5em; text-decoration: line-through;">N </div>{{product.price | intcomma}}</span>
+                                <span class="new-price" style="display: flex; flex-direction: row; font-size: 1.4em;"> <div style="font-size: 0.5em; text-decoration: line-through;">N </div>{{product.price | intcomma}}</span>
                                 {% if product.old_price %}
-                                    <span class="old-price" style="display: flex; flex-direction: row;"> <div style="font-size: 0.5em; text-decoration: line-through;">N </div>{{product.old_price | intcomma}}</span>
+                                    <span class="old-price" style="display: flex; flex-direction: row; text-decoration: line-through;"> <div style="font-size: 0.5em; text-decoration: line-through;">N </div>{{product.old_price | intcomma}}</span>
                                 {% endif %}
                             {% else%} 
                                 <div style="font-weight: bold; ">
@@ -281,10 +250,6 @@
                             {% endif %}
 
                         </div><!-- End .product-price -->
-                        <div class="product-nav product-nav-dots">
-                            <a href="#" class="active" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                            <a href="#" style="background: #a48264;"><span class="sr-only">Color name</span></a>
-                        </div><!-- End .product-nav -->
 
                         {% comment %} Add to cart button {% endcomment %}
                         {% if product.quantity_available > 0 %} 
