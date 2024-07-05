@@ -247,7 +247,7 @@
                 setTimeout(closeDialog,3000)
             }
 
-            fucntion closeDialog(){
+            function closeDialog(){
                 dialogModal = document.getElementById("dialogModal");
                 dialogModal.style.display = 'none';   
             }
@@ -478,6 +478,10 @@
         </div><!-- End .modal-dialog -->
     </div><!-- End .modal -->
 
+    {% comment %} Add new billing info modal {% endcomment %}
+    <div>
+        {% include 'partials/add_new_billing_details.html' %}
+    </div>
 
     {% comment %} Added to cart modal {% endcomment %}
     <div class="modal fade" id="added-to-cart-modal" tabindex="-1" role="dialog" aria-hidden="true">
