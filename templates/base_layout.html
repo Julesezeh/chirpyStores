@@ -478,10 +478,34 @@
         </div><!-- End .modal-dialog -->
     </div><!-- End .modal -->
 
-    {% comment %} Add new billing info modal {% endcomment %}
-    <div>
-        {% include 'partials/add_new_billing_details.html' %}
-    </div>
+       <!-- New Billing Info Modal -->
+       <div class="modal fade" id="new-billing-info-modal" tabindex="-1" role="dialog" aria-hidden="true" style="font-weight: bold;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close"  aria-label="Close">
+                        <span aria-hidden="true"><i class="icon-close"></i></span>
+                    </button>
+
+                    <div class="form-box">
+                        <div class="form-tab">
+                            <ul class="nav nav-pills nav-fill nav-border-anim" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="signin-tab" data-toggle="tab" href="#signin" role="tab" aria-controls="signin" aria-selected="true">Sign In</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">Register</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="tab-content-5">
+                               {% include 'partials/add_new_billing_details.html' %}
+                            </div><!-- End .tab-content -->
+                        </div><!-- End .form-tab -->
+                    </div><!-- End .form-box -->
+                </div><!-- End .modal-body -->
+            </div><!-- End .modal-content -->
+        </div><!-- End .modal-dialog -->
+    </div><!-- End .modal -->
 
     {% comment %} Added to cart modal {% endcomment %}
     <div class="modal fade" id="added-to-cart-modal" tabindex="-1" role="dialog" aria-hidden="true">
