@@ -192,7 +192,7 @@ def save_billing_info(request):
         pass
         
 
-
+@login_required
 def checkout(request):
     if request.method == "POST":
         existing_billing_info_pk = request.POST.get("delivery_info")
@@ -223,7 +223,7 @@ def checkout(request):
             user_current_order.billing_info = new_billing_info
             user_current_order.save()
     user = request.user
-    print(user.email)
+    # print(user.email)
     paystack_public_key = settings.PAYSTACK_PUBLIC_KEY
     user_current_order = Order.objects.filter(user = user, is_active=True).last()
     user_order_items = OrderItem.objects.filter(order=user_current_order)
