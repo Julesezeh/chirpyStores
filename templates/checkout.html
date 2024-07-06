@@ -54,7 +54,10 @@
                                             {% endfor %}
                                         </form>
                                             <!-- Button column -->
-                                                <button style="width: 20px; height:50px; margin:10px;" type="button" class="btn btn-primary btn-block">+</button>
+                                                <button style="width: 20px; height:50px; margin:10px;" type="button" class="btn btn-primary btn-block"
+                                                data-toggle={% if request.user.is_authenticated %} "modal" {% else %} None {% endif %}
+                                                data-target={% if request.user.is_authenticated %}"#new-billing-info-modal"{% else %} None {% endif %}
+                                                >+</button>
                     
                                 {% else %}
                                     <div>
