@@ -33,25 +33,25 @@
                                         <!-- Card column -->
                                         <form method="post" id="deliveryInfoForm" onsubmit="return validateForm()">
                                             {% csrf_token %}
-                                            {% for detail in delivery_details %}
-                    
-                                            <div class="col-lg-6 col-md-12" style="box-shadow:black;">
-                                                <div class="card h-100">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Billing Information-{{detail.pk}}</h5>
-                                                    <p class="card-text">{{detail.first_name}} {{detail.last_name}}<br>{{detail.street_address}}<br>{{detail.city}}, {{detail.state}}<br>Nigeria</p>
-                                                    <!-- Checkbox field for choice -->
-                                                    <div class="form-check float-right">
-                    
-                                                        <input class="form-check-input choice-checkbox" value="{{detail.id}}" name="delivery_info" type="checkbox" id="delivery_info{{ detail.id }}" {% if forloop.first %} checked {% endif %}>
-                                                        <label class="form-check-label" for="checkbox"></label>
+                                                {% for detail in delivery_details %}
+                            
+                                                    <div class="col-lg-6 col-md-12" style="box-shadow:black;">
+                                                        <div class="card h-100">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">Billing Information-{{detail.pk}}</h5>
+                                                            <p class="card-text">{{detail.first_name}} {{detail.last_name}}<br>{{detail.street_address}}<br>{{detail.city}}, {{detail.state}}<br>Nigeria</p>
+                                                            <!-- Checkbox field for choice -->
+                                                            <div class="form-check float-right">
+                            
+                                                                <input class="form-check-input choice-checkbox" value="{{detail.id}}" name="delivery_info" type="checkbox" id="delivery_info{{ detail.id }}" {% if forloop.first %} checked {% endif %}>
+                                                                <label class="form-check-label" for="checkbox"></label>
+                                                            </div>
+                                                        </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                </div>
-                                            </div>
-                        
-                        
-                                            {% endfor %}
+                            
+                            
+                                                {% endfor %}
                                         </form>
                                             <!-- Button column -->
                                                 <button style="width: 20px; height:50px; margin:10px;" type="button" class="btn btn-primary btn-block"
@@ -60,73 +60,66 @@
                                                 >+</button>
                     
                                 {% else %}
-                                    <div>
+                                {% comment %} If no existing billing information, render the form to create a new one {% endcomment %}
                                         <div class="col-lg-9">
                                             <h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <label>First Name *</label>
-                                                        <input type="text" class="form-control" required>
-                                                    </div><!-- End .col-sm-6 -->
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <label>First Name *</label>
+                                                    <input name="first_name-n" type="text" class="form-control" required>
+                                                </div><!-- End .col-sm-6 -->
+                
+                                                <div class="col-sm-6">
+                                                    <label>Last Name *</label>
+                                                    <input name="last_name-n" type="text" class="form-control" required>
+                                                </div><!-- End .col-sm-6 -->
+                                            </div><!-- End .row -->                
+                
+                                            <label>Street address *</label>
+                                            <input name="street_address" type="text" class="form-control" placeholder="House number and Street name" required>
+                
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <label>State *</label>
+                                                    <input name="state-n" type="text" class="form-control" required>
+                                                </div><!-- End .col-sm-6 -->
+                
+                                                <div class="col-sm-6">
+                                                    <label>City *</label>
+                                                    <input name="city-n" type="text" class="form-control" required>
+                                                </div><!-- End .col-sm-6 -->
+                                            </div><!-- End .row -->
 
-                                                    <div class="col-sm-6">
-                                                        <label>Last Name *</label>
-                                                        <input type="text" class="form-control" required>
-                                                    </div><!-- End .col-sm-6 -->
-                                                </div><!-- End .row -->
+                                            <label>Email address *</label>
+                                            <input type="email" name="email-n" class="form-control" required>
 
-                                                <label>Company Name (Optional)</label>
-                                                <input type="text" class="form-control">
-
-                                                <label>Country *</label>
-                                                <input type="text" class="form-control" required>
-
-                                                <label>Street address *</label>
-                                                <input type="text" class="form-control" placeholder="House number and Street name" required>
-                                                <input type="text" class="form-control" placeholder="Appartments, suite, unit etc ..." required>
-
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <label>Town / City *</label>
-                                                        <input type="text" class="form-control" required>
-                                                    </div><!-- End .col-sm-6 -->
-
-                                                    <div class="col-sm-6">
-                                                        <label>State / County *</label>
-                                                        <input type="text" class="form-control" required>
-                                                    </div><!-- End .col-sm-6 -->
-                                                </div><!-- End .row -->
-
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <label>Postcode / ZIP *</label>
-                                                        <input type="text" class="form-control" required>
-                                                    </div><!-- End .col-sm-6 -->
-
-                                                    <div class="col-sm-6">
-                                                        <label>Phone *</label>
-                                                        <input type="tel" class="form-control" required>
-                                                    </div><!-- End .col-sm-6 -->
-                                                </div><!-- End .row -->
-
-                                                <label>Email address *</label>
-                                                <input type="email" class="form-control" required>
-
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="checkout-create-acc">
-                                                    <label class="custom-control-label" for="checkout-create-acc">Create an account?</label>
-                                                </div><!-- End .custom-checkbox -->
-
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="checkout-diff-address">
-                                                    <label class="custom-control-label" for="checkout-diff-address">Ship to a different address?</label>
-                                                </div><!-- End .custom-checkbox -->
-
-                                                <label>Order notes (optional)</label>
-                                                <textarea class="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+                                            <div class="row">
+                                                {% comment %} <div class="col-sm-6">
+                                                    <label>Postcode / ZIP *</label>
+                                                    <input type="text" class="form-control" required>
+                                                </div><!-- End .col-sm-6 --> {% endcomment %}
+                
+                                                <div class="col-sm-6">
+                                                    <label>Phone *</label>
+                                                    <input name="phone-n" type="tel" class="form-control" required>
+                                                </div><!-- End .col-sm-6 -->
+                                            </div><!-- End .row -->
+                
+                
+                                            {% comment %} <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="checkout-create-acc">
+                                                <label class="custom-control-label" for="checkout-create-acc">Create an account?</label>
+                                            </div><!-- End .custom-checkbox --> {% endcomment %}
+                
+                                            {% comment %} <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="checkout-diff-address">
+                                                <label class="custom-control-label" for="checkout-diff-address">Ship to a different address?</label>
+                                            </div><!-- End .custom-checkbox --> {% endcomment %}
+                
+                                            <label>Order notes (optional)</label>
+                                            <textarea name="notes-n" class="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
                                         </div><!-- End .col-lg-9 -->
-                                    </div>
-                                    {% endif%}
+                                {% endif%}
 
                                         <aside class="col-lg-3">
                                             <div class="summary">
