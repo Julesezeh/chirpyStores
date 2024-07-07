@@ -189,6 +189,24 @@ def update_order_item(request,pk):
 
 def save_billing_info(request):
     if request.method == "POST":
+        if "FIRST_NAME":
+            delivery_email = request.POST.get("email")
+            delivery_first_name = request.POST.get("first_name")
+            delivery_last_name = request.POST.get("last_name")
+            delivery_street_address = request.POST.get("street_address")
+            delivery_city = request.POST.get("city")
+            delivery_state = request.POST.get("state")
+            delivery_notes = request.POST.get("notes",None)
+            new_billing_info = BillingInformation(user=request.user,
+                                                first_name=delivery_first_name,
+                                                last_name=delivery_last_name,
+                                                email=delivery_email,
+                                                street_address=delivery_street_address,
+                                                city=delivery_city,
+                                                state=delivery_state,
+                                                notes=delivery_notes)
+            new_billing_info.save()
+
         pass
         
 
