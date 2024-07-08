@@ -118,6 +118,17 @@
                 
                                             <label>Order notes (optional)</label>
                                             <textarea name="notes-n" class="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+                                            
+                                            <div>
+                                                <button
+                                                    class="btn btn-primary btn-block mx-auto" 
+                                                    hx-post = "{% url 'new_billing_info' %}"
+                                                    hx-vals = '{
+                                                        "from_else_statement":true
+                                                    }'
+                                                >save</button>
+                                            </div>
+                        
                                         </div><!-- End .col-lg-9 -->
                                 {% endif%}
 
