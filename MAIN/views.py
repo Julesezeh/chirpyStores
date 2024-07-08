@@ -189,14 +189,16 @@ def update_order_item(request,pk):
 
 def save_billing_info(request):
     if request.method == "POST":
-        if "FIRST_NAME":
-            delivery_email = request.POST.get("email")
-            delivery_first_name = request.POST.get("first_name")
-            delivery_last_name = request.POST.get("last_name")
-            delivery_street_address = request.POST.get("street_address")
-            delivery_city = request.POST.get("city")
-            delivery_state = request.POST.get("state")
-            delivery_notes = request.POST.get("notes",None)
+        # Using indicator to determine if the POST request is coming from the else statement or the new billing info modal
+        indicator = request.POST.get("from_else_statement")
+        if indicator:
+            delivery_email = request.POST.get("email-n")
+            delivery_first_name = request.POST.get("first_name-n")
+            delivery_last_name = request.POST.get("last_name-n")
+            delivery_street_address = request.POST.get("street_address-n")
+            delivery_city = request.POST.get("city-n")
+            delivery_state = request.POST.get("state-n")
+            delivery_notes = request.POST.get("notes-n",None)
             new_billing_info = BillingInformation(user=request.user,
                                                 first_name=delivery_first_name,
                                                 last_name=delivery_last_name,
@@ -207,8 +209,16 @@ def save_billing_info(request):
                                                 notes=delivery_notes)
             new_billing_info.save()
 
-        pass
-        
+        user = request.user
+        # print(user.email)
+        paystack_public_key = settings.PAYSTACK_PUBLIC_KEY
+        user_current_order = Order.objects.filter(user = user, is_active=True).last()
+        user_order_items = OrderItem.objects.filter(order=user_current_order)
+        delivery_details = BillingInformation.objects.filter(user=request.user)
+
+
+        print(user_order_items)
+        return render(request,'checkout.html',{"order_items":user_order_items, 'current_order':user_current_order,'delivery_details':delivery_details, "public_key":paystack_public_key, "user":user})
 
 @login_required
 def checkout(request):
