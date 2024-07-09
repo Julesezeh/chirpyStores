@@ -1,0 +1,29 @@
+<div class="delivery-info">
+    <form method="post" id="deliveryInfoForm" onsubmit="return validateForm()">
+        {% csrf_token %}
+            {% for detail in delivery_details %}
+
+                <div class="col-lg-6 col-md-12" style="box-shadow:black;">
+                    <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Billing Information-{{detail.pk}}</h5>
+                        <p class="card-text">{{detail.first_name}} {{detail.last_name}}<br>{{detail.street_address}}<br>{{detail.city}}, {{detail.state}}<br>Nigeria</p>
+                        <!-- Checkbox field for choice -->
+                        <div class="form-check float-right">
+
+                            <input class="form-check-input choice-checkbox" value="{{detail.id}}" name="delivery_info" type="checkbox" id="delivery_info{{ detail.id }}" {% if forloop.first %} checked {% endif %}>
+                            <label class="form-check-label" for="checkbox"></label>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+            
+            {% endfor %}
+    </form>
+        <!-- Button column -->
+            <button style="width: 20px; height:50px; margin:10px;" type="button" class="btn btn-primary btn-block"
+            data-toggle={% if request.user.is_authenticated %} "modal" {% else %} None {% endif %}
+            data-target={% if request.user.is_authenticated %}"#new-billing-info-modal"{% else %} None {% endif %}
+            >+</button>
+ </div>
