@@ -19,6 +19,17 @@
     </nav><!-- End .breadcrumb-nav -->
 
     <div class="page-content">
+
+            <div class="sk-chase htmx-indicator" id="spinner"  >
+                <div class="sk-chase-dot"></div>
+                <div class="sk-chase-dot"></div>
+                <div class="sk-chase-dot"></div>
+                <div class="sk-chase-dot"></div>
+                <div class="sk-chase-dot"></div>
+                <div class="sk-chase-dot"></div>
+              </div>
+
+
         <div class="checkout">
             <div class="container">
                 <div class="checkout-discount">
@@ -124,6 +135,9 @@
                                                 <button
                                                     class="btn btn-primary btn-block mx-auto" 
                                                     hx-post = "{% url 'new_billing_info' %}"
+                                                    hx-indicator = "#loadingModal"
+                                                    hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'
+                                                    hx-target = '.delivery-info'
                                                     hx-vals = '{
                                                         "from_else_statement":true
                                                     }'
