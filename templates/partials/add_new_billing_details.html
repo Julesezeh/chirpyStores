@@ -68,6 +68,7 @@
                             <button 
                                 class="btn btn-primary btn-block mx-auto" 
                                 hx-post = "{% url 'new_billing_info' %}"
+                                hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'
                                 hx-vals = '{
                                     "from_modal":true
                                 }'
