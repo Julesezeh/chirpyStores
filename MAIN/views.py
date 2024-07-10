@@ -189,6 +189,7 @@ def update_order_item(request,pk):
 
 def save_billing_info(request):
     if request.method == "POST":
+        print("Save View Triggered")
         # Using indicator to determine if the POST request is coming from the else statement or the new billing info modal
         main_indicator = request.POST.get("from_else_statement")
         aux_indicator = request.POST.get("from_modal")
@@ -216,7 +217,6 @@ def save_billing_info(request):
             user_current_order = Order.objects.filter(user = user, is_active=True).last()
             user_order_items = OrderItem.objects.filter(order=user_current_order)
             delivery_details = BillingInformation.objects.filter(user=request.user)
-
 
             print(user_order_items)
             return render(request,'checkout.html',{"order_items":user_order_items, 'current_order':user_current_order,'delivery_details':delivery_details, "public_key":paystack_public_key, "user":user})
