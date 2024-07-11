@@ -29,7 +29,11 @@ from .models import Order, Payment
 
 def process_payment(request,order_id):
     order = Order.objects.get(id=order_id)
-    new_payment = Payment(order=order)
+    new_payment = Payment(
+        order=order,
+        payment_method = "paystack",
+        
+        )
     pass
 
 def verify_payment(request):
