@@ -303,8 +303,7 @@ function payWithPaystack(e) {
         alert('Window closed.');
         },
         callback: function(response){
-        let message = 'Payment complete! Reference: ' + response.reference;
-        alert(message);
+            window.location.ref = "{% url 'verify_payment' current_order.ref %}";
         }
     });
 
