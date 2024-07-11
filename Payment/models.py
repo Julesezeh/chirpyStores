@@ -1,6 +1,7 @@
 from django.db import models
 import secrets
 from MAIN.models import Product
+from uuid import uuid4
 from USERS.models import CustomUser
 
 # Create your models here.
@@ -56,6 +57,9 @@ class Payment(models.Model):
     verified = models.BooleanField(default=False)
     payment_status = models.CharField(max_length=20, default='Pending')
     transaction_id = models.CharField(max_length=255, blank=True, null=True)
+
+    # Will be used to know when the transaction has been verified
+    verified_timestamp = models.DateTimeField( blank=True, null=True)
     payment_timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
