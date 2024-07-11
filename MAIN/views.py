@@ -29,7 +29,7 @@ def index(request):
     return render(request, 'index-final.html',{'categories':categories,"slime":"wowzer-style","products":products,"quantity":number_of_orders})
 
 
-
+@login_required
 def user_cart(request):
     categories = ["Accessories","Sports & Entertainment","Home & Garden", "Hair Extensions & Wigs","Men's Clothing","Consumer Electronics", "Home Appliances"]
     user_current_order = Order.objects.filter(user = request.user, is_active=True).last()
@@ -251,7 +251,7 @@ def save_billing_info(request):
             return render(request,'partials/delivery_info.html',{'delivery_details':delivery_details})
 
 @login_required
-def checkout(request):
+def checkout(request,order_id):
     if request.method == "POST":
         existing_billing_info_pk = request.POST.get("delivery_info")
         if existing_billing_info_pk:
@@ -280,6 +280,8 @@ def checkout(request):
             user_current_order = Order.objects.filter(user = request.user, is_active=True).last()
             user_current_order.billing_info = new_billing_info
             user_current_order.save()
+
+    # Create a new Payment for the Order that's about to be processed if no payment exists already       
     user = request.user
     # print(user.email)
     paystack_public_key = settings.PAYSTACK_PUBLIC_KEY
