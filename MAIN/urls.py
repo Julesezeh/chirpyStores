@@ -9,7 +9,7 @@ urlpatterns = [
     path("",index,name="home"),
     path("product/<int:pk>",specific_product,name="product"),
     path("cart",user_cart,name="cart"),
-    path("checkout/<order_id>",checkout,name="checkout")
+    path("checkout/<int:order_id>",checkout,name="checkout")
 
 
 ]
