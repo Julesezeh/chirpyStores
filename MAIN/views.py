@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import BasePopup, Product
+from .models import BasePopup, Product,ShoeBrand
 from Payment.models import Order, OrderItem, BillingInformation
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -292,3 +292,10 @@ def checkout(request,order_id):
 
     print(user_order_items)
     return render(request,'checkout.html',{"order_items":user_order_items, 'current_order':user_current_order,'delivery_details':delivery_details, "public_key":paystack_public_key, "user":user})
+
+
+
+
+
+def brand_page(request,brand):
+    return render(request,'categories.html',{'brand':brand})
