@@ -298,4 +298,5 @@ def checkout(request,order_id):
 
 
 def brand_page(request,brand):
-    return render(request,'categories.html',{'brand':brand})
+    products = Product.objects.filter(brand=brand)
+    return render(request,'categories.html',{'brand':brand, 'products':products})
