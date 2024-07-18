@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 from . forms import PaymentForm
 from .models import Order, Payment
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 
@@ -26,7 +28,7 @@ from .models import Order, Payment
 
 #     pass
 
-
+@login_required
 def process_payment(request,order_id):
     order = Order.objects.get(id=order_id)
     new_payment = Payment(
