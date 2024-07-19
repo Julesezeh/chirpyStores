@@ -123,16 +123,19 @@
                                             </div><!-- End .rating-container -->
 
                                             <div class="product-nav product-nav-thumbs">
-                                                <a href="#" class="active">
-                                                    <img src="assets/images/products/product-4-thumb.jpg" alt="product desc">
-                                                </a>
-                                                <a href="#">
-                                                    <img src="assets/images/products/product-4-2-thumb.jpg" alt="product desc">
-                                                </a>
+                                                {% if product.image_2 %}
+                                                    <a href="#" class="active">
+                                                        <img src="{{product.image_2.url}}" alt="product desc">
+                                                    </a>
+                                                {% endif %}
+                                                
+                                                {% if product.image_3 %}
+                                                    <a href="#">
+                                                        <img src="{{product.image_3.url}}" alt="product desc">
+                                                    </a>
+                                                {% endif %}
+                                                
 
-                                                <a href="#">
-                                                    <img src="assets/images/products/product-4-3-thumb.jpg" alt="product desc">
-                                                </a>
                                             </div><!-- End .product-nav -->
                                         </div><!-- End .product-body -->
                                     </div><!-- End .product -->
