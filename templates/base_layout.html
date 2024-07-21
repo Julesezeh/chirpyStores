@@ -97,7 +97,7 @@
                                     <a href="#" class="sf-with-ul">BRANDS</a>
 
                                     <ul>
-                                        <li>
+                                        {% comment %} <li>
                                             <a href="about.html" class="sf-with-ul">About</a>
 
                                             <ul>
@@ -112,11 +112,15 @@
                                                 <li><a href="contact.html">Contact 01</a></li>
                                                 <li><a href="contact-2.html">Contact 02</a></li>
                                             </ul>
-                                        </li>
-                                        <li><a href="login.html">Login</a></li>
+                                        </li> {% endcomment %}
+                                        {% for brand in brands %}
+                                          <li><a href="{% url 'MAIN:brand' brand.name %}">{{brand.name}}</a></li>
+
+                                        {% endfor %}
+                                        {% comment %} <li><a href="login.html">Login</a></li>
                                         <li><a href="faq.html">FAQs</a></li>
                                         <li><a href="404.html">Error 404</a></li>
-                                        <li><a href="coming-soon.html">Coming Soon</a></li>
+                                        <li><a href="coming-soon.html">Coming Soon</a></li> {% endcomment %}
                                     </ul>
                                 </li>
                                 
