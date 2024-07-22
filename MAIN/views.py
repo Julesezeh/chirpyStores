@@ -19,6 +19,8 @@ import chirpyStores.settings as settings
 def index(request):
     categories = ["Accessories","Sports & Entertainment","Home & Garden", "Hair Extensions & Wigs","Men's Clothing","Consumer Electronics", "Home Appliances"]
     products = Product.objects.all()
+    brands = ShoeBrand.objects.all()
+
 
     if request.user.is_authenticated:
         user_orders = Order.objects.filter(user=request.user,is_active=True).last()
@@ -26,7 +28,7 @@ def index(request):
         number_of_orders = len(user_order_items)
         print(number_of_orders)
     else: number_of_orders = None
-    return render(request, 'index-final.html',{'categories':categories,"slime":"wowzer-style","products":products,"quantity":number_of_orders})
+    return render(request, 'index-final.html',{'categories':categories,"slime":"wowzer-style",'brands':brands,"products":products,"quantity":number_of_orders})
 
 
 @login_required
@@ -34,20 +36,25 @@ def user_cart(request):
     categories = ["Accessories","Sports & Entertainment","Home & Garden", "Hair Extensions & Wigs","Men's Clothing","Consumer Electronics", "Home Appliances"]
     user_current_order = Order.objects.filter(user = request.user, is_active=True).last()
     user_order_items = OrderItem.objects.filter(order=user_current_order)
+    brands = ShoeBrand.objects.all()
+
     # cart_items = Order.objects.filter(user=request.user )
-    return render(request,'cart-final.html',{'categories':categories, 'order_items':user_order_items, 'current_order':user_current_order})
+    return render(request,'cart-final.html',{'categories':categories,'brands':brands, 'order_items':user_order_items, 'current_order':user_current_order})
 
 
 
 def specific_product(request,pk):
     product = get_object_or_404(Product,pk=pk)
+    brands = ShoeBrand.objects.all()
+
     if request.user.is_authenticated:
         user_orders = Order.objects.filter(user=request.user,is_active=True).last()
         user_order_items = OrderItem.objects.filter(order=user_orders)
         number_of_orders = len(user_order_items)
         print(number_of_orders)
-    else: number_of_orders = None    
-    return render(request, "product.html", {"product":product,"quantity":number_of_orders})
+    else: 
+        number_of_orders = None    
+    return render(request, "product.html", {"product":product,"quantity":number_of_orders,'brands':brands})
 
 
 @login_required
@@ -288,10 +295,11 @@ def checkout(request,order_id):
     paystack_public_key = settings.PAYSTACK_PUBLIC_KEY
     user_order_items = OrderItem.objects.filter(order=user_current_order)
     delivery_details = BillingInformation.objects.filter(user=request.user)
+    brands = ShoeBrand.objects.all()
 
 
     print(user_order_items)
-    return render(request,'checkout.html',{"order_items":user_order_items, 'current_order':user_current_order,'delivery_details':delivery_details, "public_key":paystack_public_key, "user":user})
+    return render(request,'checkout.html',{"order_items":user_order_items, 'current_order':user_current_order,'delivery_details':delivery_details, "public_key":paystack_public_key, "user":user, 'brands':brands})
 
 
 
@@ -299,6 +307,9 @@ def checkout(request,order_id):
 
 def brand_page(request,brand):
     brand_ = ShoeBrand.objects.get(name=brand)
+    brands = ShoeBrand.objects.all()
+    for brandx in brands:
+        print(brandx)
     if brand:
         products = Product.objects.filter(brand=brand_.pk)
-    return render(request,'categories.html',{'brand':brand, 'products':products})
+    return render(request,'categories.html',{'brand':brand, 'products':products,'brands':brands})
