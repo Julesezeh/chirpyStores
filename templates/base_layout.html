@@ -60,14 +60,23 @@
                         <nav class="main-nav">
                             <ul class="menu sf-arrows">
                                 <li class="megamenu-container active">
-                                    <a href="{% url 'MAIN:home' %}" class="sf-with-ul">Home</a>
+                                    <a href="{% url 'MAIN:home' %}" class="sf-with-ul">HOME</a>
 
                                 
                                 </li>
                                 <li>
-                                    <a href="category.html" class="sf-with-ul">Categories</a>
+                                    <a href="#" class="sf-with-ul">CATEGORIES</a>
 
-                                    <div class="megamenu megamenu-md">
+                                    <ul>
+                                        {% for category in categories %}
+                                        <li><a href="{% url 'MAIN:category' category.name %}">{{category.name|upper}}</a></li>
+
+                                      {% endfor %}
+
+                                    </ul>
+                            
+
+                                    {% comment %} <div class="megamenu megamenu-md">
                                         <div class="row no-gutters w-4">
                                             <div class="col-md-8">
                                                 <div class="menu-col">
@@ -90,7 +99,7 @@
 
                                             
                                         </div><!-- End .row -->
-                                    </div><!-- End .megamenu megamenu-md -->
+                                    </div><!-- End .megamenu megamenu-md --> {% endcomment %}
                                 </li>
                                
                                 <li>
@@ -114,7 +123,7 @@
                                             </ul>
                                         </li> {% endcomment %}
                                         {% for brand in brands %}
-                                          <li><a href="{% url 'MAIN:brand' brand.name %}">{{brand.name}}</a></li>
+                                          <li><a href="{% url 'MAIN:brand' brand.name %}">{{brand.name|upper}}</a></li>
 
                                         {% endfor %}
                                         {% comment %} <li><a href="login.html">Login</a></li>
