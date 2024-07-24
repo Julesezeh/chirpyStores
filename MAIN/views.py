@@ -17,9 +17,11 @@ import chirpyStores.settings as settings
 # When rendering the products individually, the maximum the user should be able to order should match the number available
 # And updated immediately using HTMX
 def index(request):
-    categories = ["Accessories","Sports & Entertainment","Home & Garden", "Hair Extensions & Wigs","Men's Clothing","Consumer Electronics", "Home Appliances"]
+    # categories = ["Accessories","Sports & Entertainment","Home & Garden", "Hair Extensions & Wigs","Men's Clothing","Consumer Electronics", "Home Appliances"]
     products = Product.objects.all()
     brands = ShoeBrand.objects.all()
+    categories = ProductCategory.objects.all()    
+
 
 
     if request.user.is_authenticated:
