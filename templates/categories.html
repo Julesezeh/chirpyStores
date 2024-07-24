@@ -4,14 +4,18 @@
 <main class="main">
     <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
         <div class="container">
-            <h1 class="page-title">{{brand|capfirst}}<span>Shop</span></h1>
+            {% if brand %}
+                <h1 class="page-title">{{brand|capfirst}}<span>Shop</span></h1>        
+            {% elif category %}
+                <h1 class="page-title">{{category|capfirst}}</h1>
+            {% endif %}
         </div><!-- End .container -->
     </div><!-- End .page-header -->
     <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url 'MAIN:home' %}">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">{{brand}}</a></li>
+                <li class="breadcrumb-item"><a href="#">{% if brand %} {{brand}} {% elif category %}{{category}}{% endif %}</a></li>
                 {% comment %} <li class="breadcrumb-item active" aria-current="page">Grid 3 Columns</li> {% endcomment %}
             </ol>
         </div><!-- End .container -->
