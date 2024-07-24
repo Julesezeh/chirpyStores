@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import BasePopup, Product,ShoeBrand
+from .models import BasePopup, Product,ShoeBrand,ProductCategory
 from Payment.models import Order, OrderItem, BillingInformation
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -307,9 +307,20 @@ def checkout(request,order_id):
 
 def brand_page(request,brand):
     brand_ = ShoeBrand.objects.get(name=brand)
+    #The second and third queries are for the data in the brands and category dropdowns in the navbar
     brands = ShoeBrand.objects.all()
-    for brandx in brands:
-        print(brandx)
-    if brand:
+    categories = ProductCategory.objects.all()    
+    if brand and brand_:
         products = Product.objects.filter(brand=brand_.pk)
-    return render(request,'categories.html',{'brand':brand, 'products':products,'brands':brands})
+    return render(request,'categories.html',{'brand':brand,'categories':categories, 'products':products,'brands':brands})
+
+def category_page(request,category):
+    category_ = ProductCategory.objects.get(name=category)
+    #The second and third queries are for the data in the brands and category dropdowns in the navbar
+    brands = ShoeBrand.objects.all() 
+    categories = ProductCategory.objects.all()
+
+    if category and category_ :
+        products = Product.objects.filter(category=category_.pk)
+        return render(request,'categories.html',{'category':category,'products':products,'categories':categories,'brands':brands})
+    
