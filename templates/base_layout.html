@@ -59,13 +59,13 @@
 
                         <nav class="main-nav">
                             <ul class="menu sf-arrows">
-                                <li class="megamenu-container active">
+                                <li class="megamenu-container {% if not brand and not category %} active{% endif %}">
                                     <a href="{% url 'MAIN:home' %}" class="sf-with-ul">HOME</a>
 
                                 
                                 </li>
                                 <li>
-                                    <a href="#" class="sf-with-ul">CATEGORIES</a>
+                                    <a href="#" class="sf-with-ul" >CATEGORIES</a>
 
                                     <ul>
                                         {% for category in categories %}
