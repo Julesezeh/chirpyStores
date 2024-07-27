@@ -42,7 +42,6 @@
                     <div class="row" >
                                 {% if delivery_details %}
                                         <!-- Card column -->
-                                        <div class="delivery-info">
                                             <form method="post" id="deliveryInfoForm" onsubmit="return validateForm()">
                                                 {% csrf_token %}
                                                     {% for detail in delivery_details %}
@@ -70,7 +69,6 @@
                                                     data-toggle={% if request.user.is_authenticated %} "modal" {% else %} None {% endif %}
                                                     data-target={% if request.user.is_authenticated %}"#new-billing-info-modal"{% else %} None {% endif %}
                                                     >+</button>
-                                         </div>
                                 {% else %}
                                 {% comment %} If no existing billing information, render the form to create a new one {% endcomment %}
                                         <div class="col-lg-9">
@@ -303,7 +301,8 @@ function payWithPaystack(e) {
         alert('Window closed.');
         },
         callback: function(response){
-            window.location.ref = "{% url 'verify_payment' current_order.ref %}";
+            
+            window.location.ref = "{% url 'payment:process_payment' current_order.pk %}";
         }
     });
 
