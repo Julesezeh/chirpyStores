@@ -326,3 +326,13 @@ def category_page(request,category):
         products = Product.objects.filter(category=category_.pk)
         return render(request,'categories.html',{'category':category,'products':products,'categories':categories,'brands':brands})
     
+
+
+def search(request,text):
+    # Search through Product names, ProductCategory names and Brand names, and conditionally render them on a search results page
+    query_filter = text.lower()
+    # Product Search
+    related_products = Product.objects.filter(name=query_filter)
+    related_brands = ShoeBrand.objects.filter(name=query_filter)
+    related_categories = ProductCategory.objects.filter(name=query_filter)
+    return render(request,'search_results.html',context={'related_brands':related_brands,'related_categories':related_categories,'related_products':related_products})
