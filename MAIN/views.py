@@ -328,11 +328,15 @@ def category_page(request,category):
     
 
 
-def search(request,text):
+def search_results(request):
     # Search through Product names, ProductCategory names and Brand names, and conditionally render them on a search results page
-    query_filter = text.lower()
-    # Product Search
-    related_products = Product.objects.filter(name=query_filter)
-    related_brands = ShoeBrand.objects.filter(name=query_filter)
-    related_categories = ProductCategory.objects.filter(name=query_filter)
-    return render(request,'search_results.html',context={'related_brands':related_brands,'related_categories':related_categories,'related_products':related_products})
+    if request.method == "POST":
+        text = request.POST.get("query")
+        if text:
+            query_filter = text.lower()
+            # Product Search
+            related_products = Product.objects.filter(name=query_filter)
+            related_brands = ShoeBrand.objects.filter(name=query_filter)
+            related_categories = ProductCategory.objects.filter(name=query_filter)
+            print({"related_products":related_products, "related_brands":related_brands,"related_categories":related_categories})
+            return render(request,'search_results.html',context={'related_brands':related_brands,'related_categories':related_categories,'related_products':related_products})
