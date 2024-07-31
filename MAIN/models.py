@@ -13,6 +13,7 @@ class ProductCategory(models.Model):
 
 class ShoeBrand (models.Model):
     name = models.CharField(max_length=200,default=None,blank=True)
+    image = models.ImageField(upload_to='brand_images/',blank=True,null=True)
 
     def __str__(self):
         return self.name
