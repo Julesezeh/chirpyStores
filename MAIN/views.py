@@ -335,8 +335,8 @@ def search_results(request):
         if text:
             query_filter = text.lower()
             # Product Search
-            related_products = Product.objects.filter(name=query_filter)
-            related_brands = ShoeBrand.objects.filter(name=query_filter)
-            related_categories = ProductCategory.objects.filter(name__islike=query_filter)
+            related_products = Product.objects.filter(name__contains=query_filter)
+            related_brands = ShoeBrand.objects.filter(name__contains=query_filter)
+            related_categories = ProductCategory.objects.filter(name__contains=query_filter)
             print({"related_products":related_products, "related_brands":related_brands,"related_categories":related_categories})
             return render(request,'search_results.html',context={'related_brands':related_brands,'related_categories':related_categories,'related_products':related_products})
