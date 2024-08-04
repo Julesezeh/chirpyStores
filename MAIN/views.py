@@ -11,6 +11,9 @@ import chirpyStores.settings as settings
 
 
 # Create your views here.
+brands = ShoeBrand.objects.all() 
+categories = ProductCategory.objects.all()
+
 
 
 
@@ -19,8 +22,6 @@ import chirpyStores.settings as settings
 def index(request):
     # categories = ["Accessories","Sports & Entertainment","Home & Garden", "Hair Extensions & Wigs","Men's Clothing","Consumer Electronics", "Home Appliances"]
     products = Product.objects.all()
-    brands = ShoeBrand.objects.all()
-    categories = ProductCategory.objects.all()    
 
 
 
@@ -35,10 +36,8 @@ def index(request):
 
 @login_required
 def user_cart(request):
-    categories = ["Accessories","Sports & Entertainment","Home & Garden", "Hair Extensions & Wigs","Men's Clothing","Consumer Electronics", "Home Appliances"]
     user_current_order = Order.objects.filter(user = request.user, is_active=True).last()
     user_order_items = OrderItem.objects.filter(order=user_current_order)
-    brands = ShoeBrand.objects.all()
 
     # cart_items = Order.objects.filter(user=request.user )
     return render(request,'cart-final.html',{'categories':categories,'brands':brands, 'order_items':user_order_items, 'current_order':user_current_order})
@@ -297,11 +296,10 @@ def checkout(request,order_id):
     paystack_public_key = settings.PAYSTACK_PUBLIC_KEY
     user_order_items = OrderItem.objects.filter(order=user_current_order)
     delivery_details = BillingInformation.objects.filter(user=request.user)
-    brands = ShoeBrand.objects.all()
 
 
     print(user_order_items)
-    return render(request,'checkout.html',{"order_items":user_order_items, 'current_order':user_current_order,'delivery_details':delivery_details, "public_key":paystack_public_key, "user":user, 'brands':brands})
+    return render(request,'checkout.html',{"order_items":user_order_items, 'current_order':user_current_order,'delivery_details':delivery_details, "public_key":paystack_public_key, "user":user, 'brands':brands,'categories':categories,'brands':brands})
 
 
 
@@ -318,9 +316,6 @@ def brand_page(request,brand):
 
 def category_page(request,category):
     category_ = ProductCategory.objects.get(name=category)
-    #The second and third queries are for the data in the brands and category dropdowns in the navbar
-    brands = ShoeBrand.objects.all() 
-    categories = ProductCategory.objects.all()
 
     if category and category_ :
         products = Product.objects.filter(category=category_.pk)
@@ -339,4 +334,4 @@ def search_results(request):
             related_brands = ShoeBrand.objects.filter(name__contains=query_filter)
             related_categories = ProductCategory.objects.filter(name__contains=query_filter)
             print({"related_products":related_products, "related_brands":related_brands,"related_categories":related_categories})
-            return render(request,'search_results.html',context={'related_brands':related_brands,'related_categories':related_categories,'related_products':related_products})
+            return render(request,'search_results.html',context={'related_brands':related_brands,'related_categories':related_categories,'related_products':related_products,'categories':categories,'brands':brands})
