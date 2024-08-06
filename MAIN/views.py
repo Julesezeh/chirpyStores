@@ -55,7 +55,7 @@ def specific_product(request,pk):
         print(number_of_orders)
     else: 
         number_of_orders = None    
-    return render(request, "product.html", {"product":product,"quantity":number_of_orders,'brands':brands})
+    return render(request, "product.html", {"product":product,"quantity":number_of_orders,'brands':brands,"categories":categories})
 
 
 @login_required
